@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Member
 from django.template import loader
 from django.urls import reverse
+from .forms import ProductForm
 
 # Create your views here.
 def index(request):
@@ -60,4 +61,13 @@ def delete(request,id):
     return HttpResponseRedirect(reverse('members'))
 
 
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  # Redirect to a list of products
+    else:
+        form = ProductForm()
+    return render(request, 'products/add.html', {'form': form})
 

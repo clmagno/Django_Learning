@@ -1,0 +1,18 @@
+{% extends 'misc/base.html'%}
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+<div class="container" style=" display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;" >
+    
+    <!-- <form method="post"> -->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Product</button>
+    </form>
+
+</div>
+{% endblock %}
+
