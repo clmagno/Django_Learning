@@ -1,0 +1,29 @@
+{% extends 'misc/base.html'%}
+    
+{% block content %}
+    <div class="container" style=" display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;" >
+        
+
+        <form action="updaterecord/{{member.id}}" method="post" class="form mt-5">
+            <h1>Update Member</h1>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first">First Name:</label>
+                <input name="first" value="{{member.fname}}">
+            </div>
+            <div class="form-group">
+                <label for="last">Last Name:</label>
+                <input name="last" value="{{member.lname}}">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="submit">
+            </div>
+            
+        </form>
+
+    </div>
+
+{% endblock %}

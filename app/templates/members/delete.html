@@ -1,0 +1,22 @@
+{% extends 'misc/base.html' %}
+
+{% block title %}Confirmation {% endblock %}
+{% block content %}
+
+<div class="container" style=" display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;" >
+    
+    <form  action="delete/{{member.id}}" method="post">
+        
+        {% csrf_token %}
+        <div class="form-group text-center">
+            <h2> Are you sure you want to remove  {{member.fname}} {{member.lname}}? </h2>
+            <input type="submit" class="btn btn-primary" value="Yes">
+            <a href="{% url 'members' %}" class="btn btn-warning" >No</a>
+        </div>
+    </form>
+    
+</div>
+{% endblock %}

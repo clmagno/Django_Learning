@@ -1,0 +1,36 @@
+{% extends 'misc/base.html'%}
+    {% block title %}Members{% endblock %}
+    {% block content %}
+    
+    <div class="container mt-5">
+        <h1>Members</h1>
+        <p class="text-right">
+            <a href="add/" class="btn btn-primary" role="button" >Add Member</a>
+        </p>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" >First</th>
+                    <th scope="col">Last</th>
+                    <th colspan="2" scope="col" class="text-center w-auto">Actions</th> <!-- Spanning across 2 columns -->
+                </tr>
+            </thead>
+            <tbody>            
+                {% for item in members %}
+            <tr>
+                <td>{{item.fname}}</td>
+                <td>{{item.lname}}</td>
+                <td style="width: 35px;"><a href="update/{{item.id}}" class="btn btn-primary">Update</a></td>
+                <td style="width: 35px;"><a href="confirm_delete/{{item.id}}" class="btn btn-warning">Remove</a></td>
+            </tr>
+            {% endfor %}
+          
+            </tbody>
+        </table>
+        
+            
+        
+    </div>
+    
+    
+        {%endblock%}
