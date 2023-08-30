@@ -5,6 +5,7 @@ from .models import User, UserProfile, Order, Customer, Product, Category, Membe
 # Register your models here.
 admin.site.register(User)
 admin.site.register(UserProfile)
+
 admin.site.register(Order)
 admin.site.register(Customer)
 admin.site.register(Category)
