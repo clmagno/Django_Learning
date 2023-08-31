@@ -1,0 +1,18 @@
+{% extends 'misc/base.html' %}
+{% block title %}Upload CSV{% endblock %}
+
+{% block content %}
+<div class="container" style=" display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;" >
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.csv_file.id_for_label }}">Choose a CSV file:</label><br>
+            {{ form.csv_file }}
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+{% endblock %}

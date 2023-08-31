@@ -3,7 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Member
 from django.template import loader
 from django.urls import reverse
-from .forms import ProductForm
+from .forms import ProductForm, UploadCSVForm
+import csv
+from io import TextIOWrapper
 
 # Create your views here.
 def index(request):
@@ -71,3 +73,25 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'products/add.html', {'form': form})
 
+def upload_csv(request):
+    if request.method == 'POST':
+        form = UploadCSVForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file']
+            # Check if it's a valid CSV file
+            if csv_file.name.endswith('.csv'):
+                # Open the CSV file in text mode
+                csv_text = TextIOWrapper(csv_file.file, encoding='utf-8')
+                # Parse CSV data and create Member objects
+                csv_data = csv.reader(csv_text)
+                next(csv_data)
+                for row in csv_data:
+                    fname, lname = row
+                    Member.objects.create(fname=fname, lname=lname)
+                return HttpResponseRedirect(reverse('members'))  # Render the success page
+            else:
+                # Handle invalid file format
+                return render(request, 'members/upload.html', {'form': form, 'error_message': 'Invalid file format.'})
+    else:
+        form = UploadCSVForm()
+    return render(request, 'members/upload.html', {'form': form})

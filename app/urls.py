@@ -11,5 +11,5 @@ urlpatterns=[
     path('members/confirm_delete/<int:id>', views.confirm_delete, name='confirm_delete'),
     path('members/confirm_delete/delete/<int:id>', views.delete, name='delete'),
     path('add_product/', views.add_product, name='add_product'),
-
+    path('members/upload_csv/', views.upload_csv, name='upload_csv'),
 ]
