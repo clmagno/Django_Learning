@@ -8,4 +8,6 @@ class ProductForm(forms.ModelForm):
 
 
 class UploadCSVForm(forms.Form):
-    csv_file = forms.FileField(label='Upload CSV File')
+    csv_file = forms.FileField(
+        label='Upload CSV File',
+    )

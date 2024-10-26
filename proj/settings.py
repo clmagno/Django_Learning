@@ -27,6 +27,10 @@ SECRET_KEY = 'django-insecure-_en_0kk-+b+l7rkc4m@*u6z@=^$ix$xne0yine1kzale$$kf)&
 DEBUG = True
 
 ALLOWED_HOSTS = []
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/members/'
+LOGOUT_REDIRECT_URL = '/members/'
+
 
 
 # Application definition
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app.middleware.FileUploadLoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'proj.urls'
@@ -126,3 +131,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

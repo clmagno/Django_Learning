@@ -10,17 +10,34 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'index' %} ">Learning Hub</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Learning Hub</a>
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item {% if  'members' in request.path  %}active{% endif %}">
-                    <a class="nav-link" href="{% url 'members' %}">Members </a>
-                    <!-- href= url 'user-detail' user_id=user.id  -->
+            <ul class="navbar-nav "> <!-- Added 'ml-auto' to align items to the right -->
+                <li class="nav-item {% if 'members' in request.path %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'members' %}">Members</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-link ml-auto">Welcome {{user.username}}!</li>
+                {% csrf_token %}
+                {% else %}
+                <li class="nav-link"></li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
@@ -37,5 +54,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -6,11 +6,13 @@ from django.urls import reverse
 from .forms import ProductForm, UploadCSVForm
 import csv
 from io import TextIOWrapper
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
 def index(request):
     return HttpResponse(loader.get_template('misc/index.html').render({},request))
 
+@login_required
 def home(request):
     members = Member.objects.all().values()
     template = loader.get_template('members/home.html')
@@ -23,7 +25,7 @@ def add(request):
     template  = loader.get_template('members/add.html')
     return HttpResponse(template.render({},request)) 
 
-def addrecord(request):
+def addrecord(request): 
     fn = request.POST['first']
     ln = request.POST['last']
     
@@ -32,7 +34,7 @@ def addrecord(request):
     return HttpResponseRedirect(reverse('members'))
 
 def update(request,id):
-    member = Member.objects.get(id=id) #Select * from Member where id= id
+    member = Member.objects.get(id=id) #Select * from Member where id= 3
     
     template = loader.get_template("members/update.html")
     context={
@@ -72,7 +74,7 @@ def add_product(request):
     else:
         form = ProductForm()
     return render(request, 'products/add.html', {'form': form})
-
+@login_required
 def upload_csv(request):
     if request.method == 'POST':
         form = UploadCSVForm(request.POST, request.FILES)
@@ -84,7 +86,7 @@ def upload_csv(request):
                 csv_text = TextIOWrapper(csv_file.file, encoding='utf-8')
                 # Parse CSV data and create Member objects
                 csv_data = csv.reader(csv_text)
-                next(csv_data)
+                # next(csv_data) # if there is no header remain commented
                 for row in csv_data:
                     fname, lname = row
                     Member.objects.create(fname=fname, lname=lname)
